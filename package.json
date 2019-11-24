@@ -1,0 +1,24 @@
+{
+  "name": "stripe-subscriptions",
+  "version": "1.0.0",
+  "description": "Stripe subscription with node.js",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app",
+    "dev": "nodemon app"
+  },
+  "keywords": [],
+  "author": "danramzdev",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "stripe": "^7.13.1"
+  },
+  "devDependencies": {
+    "eslint": "6.7.0",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "nodemon": "^2.0.1"
+  }
+}
