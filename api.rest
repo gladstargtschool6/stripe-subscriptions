@@ -1,0 +1,10 @@
+# Get checkout page
+GET http://localhost:3000/checkout
+
+###
+
+# Get all customers on Stripe
+GET http://localhost:3000/get-customers
+
+###
+

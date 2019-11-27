@@ -4,8 +4,8 @@
   "description": "Stripe subscription with node.js",
   "main": "index.js",
   "scripts": {
-    "start": "node app",
-    "dev": "nodemon app"
+    "start": "node server/app",
+    "dev": "nodemon server/app"
   },
   "keywords": [],
   "author": "danramzdev",

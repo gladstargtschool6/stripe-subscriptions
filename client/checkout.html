@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout Stripe</title>
+    <link rel="stylesheet" href="css/StripeElements.css" />
+    <link rel="stylesheet" href="css/MyCardElement.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="./js/script.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Checkout Stripe</h1>
+
+      <form>
+        <div class="form-group">
+          <label for="name-input">Nombre</label>
+          <input class="form-control" type="text" name="name" id="name-input" />
+        </div>
+        <div class="form-group">
+          <label for="email-input">Email</label>
+          <input
+            class="form-control"
+            type="email"
+            name="email"
+            id="email-input"
+          />
+        </div>
+        <div id="card-element" class="card-element">
+          <!-- Elements will create input elements here -->
+        </div>
+
+        <!-- We'll put the error messages in this element -->
+        <div id="card-errors" role="alert"></div>
+
+        <button type="submit" id="submit">Pay</button>
+      </form>
+    </div>
+  </body>
+</html>
