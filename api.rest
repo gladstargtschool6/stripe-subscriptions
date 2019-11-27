@@ -3,8 +3,17 @@ GET http://localhost:3000/checkout
 
 ###
 
+# Get public key
+GET http://localhost:3000/public-key
+
+###
+
 # Get all customers on Stripe
 GET http://localhost:3000/get-customers
 
 ###
 
+# Get all plans on Stripe
+GET http://localhost:3000/get-plans
+
+###

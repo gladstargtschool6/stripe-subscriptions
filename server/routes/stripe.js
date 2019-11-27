@@ -22,6 +22,8 @@ module.exports = () => {
     const { name, email, paymentMethodId } = req.body;
 
     try {
+      // This creates a new Customer and attaches
+      // the PaymentMethod to be default for invoice in one API call.
       const customer = await stripe.customers.create({
         payment_method: paymentMethodId,
         name,
@@ -30,7 +32,16 @@ module.exports = () => {
           default_payment_method: paymentMethodId
         }
       });
-      await res.json({ customer });
+
+      // At this point, associate the ID of the Customer object with your
+      // own internal representation of a customer, if you have one.
+      const subscription = await stripe.subscriptions.create({
+        customer: customer.id,
+        items: [{ plan: 'plan_GEe0R58ofquJqj' }],
+        expand: ['latest_invoice.payment_intent']
+      });
+
+      res.json({ subscription });
     } catch (e) {
       console.log(e.message);
     }
@@ -43,6 +54,16 @@ module.exports = () => {
       res.json(customers);
     } catch (e) {
       console.log(e);
+    }
+  });
+
+  router.get('/get-plans', async (req, res) => {
+    try {
+      const plans = await stripe.plans.list();
+
+      res.json(plans);
+    } catch (e) {
+      console.log(e.message);
     }
   });
 
