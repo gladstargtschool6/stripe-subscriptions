@@ -29,26 +29,26 @@ function stripeElements(publickKey) {
   });
 }
 
-function createPaymentMethod(stripe, card) {
+async function createPaymentMethod(stripe, card) {
   const name = document.getElementById('name-input').value;
   const email = document.getElementById('email-input').value;
-  stripe
-    .createPaymentMethod('card', card, {
-      billing_details: {
-        name,
-        email
-      }
-    })
-    .then(({ error, paymentMethod }) => {
-      if (error) {
-        return console.log(error.message);
-      }
-      return createCustomer(paymentMethod.id, name, email);
-    });
+  const createPM = await stripe.createPaymentMethod('card', card, {
+    billing_details: {
+      name,
+      email
+    }
+  });
+  const { error, paymentMethod } = await createPM;
+
+  if (error) {
+    return console.log(error.message);
+  }
+
+  return createCustomer(paymentMethod.id, name, email);
 }
 
-function createCustomer(paymentMethodId, name, email) {
-  return fetch('/create-customer', {
+async function createCustomer(paymentMethodId, name, email) {
+  const result = await fetch('/create-customer', {
     method: 'post',
     headers: {
       'Content-Type': 'application/json'
@@ -58,22 +58,22 @@ function createCustomer(paymentMethodId, name, email) {
       email,
       paymentMethodId
     })
-  })
-    .then(result => result.json())
-    .then(customer => console.log(customer));
+  });
+  const subscription = await result.json();
+
+  console.log(subscription);
 }
 
-function getStripePublicKey() {
-  return fetch('/public-key', {
+async function getStripePublicKey() {
+  const result = await fetch('/public-key', {
     method: 'get',
     headers: {
       'Content-Type': 'application/json'
     }
-  })
-    .then(result => result.json())
-    .then(data => {
-      stripeElements(data.publicKey);
-    });
+  });
+  const { publicKey } = await result.json();
+
+  stripeElements(publicKey);
 }
 
 getStripePublicKey();
