@@ -41,8 +41,9 @@ module.exports = () => {
         expand: ['latest_invoice.payment_intent']
       });
 
-      res.json({ subscription });
+      res.json(subscription);
     } catch (e) {
+      res.status(500).send('Server Error');
       console.log(e.message);
     }
   });
@@ -53,6 +54,7 @@ module.exports = () => {
 
       res.json(customers);
     } catch (e) {
+      res.status(500).send('Server Error');
       console.log(e);
     }
   });
@@ -63,6 +65,7 @@ module.exports = () => {
 
       res.json(plans);
     } catch (e) {
+      res.status(500).send('Server Error');
       console.log(e.message);
     }
   });
