@@ -25,6 +25,7 @@ function stripeElements(publickKey) {
   document.getElementById('submit').addEventListener('click', e => {
     e.preventDefault();
 
+    changeLoadingState(true);
     createPaymentMethod(stripe, card);
   });
 }
@@ -48,20 +49,25 @@ async function createPaymentMethod(stripe, card) {
 }
 
 async function createCustomer(paymentMethodId, name, email) {
-  const result = await fetch('/create-customer', {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      name,
-      email,
-      paymentMethodId
-    })
-  });
-  const subscription = await result.json();
+  try {
+    const result = await fetch('/create-customer', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name,
+        email,
+        paymentMethodId
+      })
+    });
+    const subscription = await result.json();
 
-  console.log(subscription);
+    console.log(subscription);
+    changeLoadingState(false);
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 async function getStripePublicKey() {
@@ -77,3 +83,19 @@ async function getStripePublicKey() {
 }
 
 getStripePublicKey();
+
+/* ------------- Helpers ------------- */
+
+function changeLoadingState(isLoading) {
+  const submitButton = document.querySelector('#submit');
+
+  if (isLoading) {
+    submitButton.classList.add('loading');
+    submitButton.innerText = 'Loading';
+    submitButton.disabled = true;
+  } else {
+    submitButton.classList.remove('loading');
+    submitButton.innerText = 'Pay';
+    submitButton.disabled = false;
+  }
+}
